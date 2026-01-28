@@ -42,6 +42,12 @@ Explain:
 
 ## Installation & Initial Setup
 - Step-by-step installation instructions
+    grafana installation
+    Prometheus installation
+    Loki installation
+    Alloy installation
+    node_exporter installation
+    
 - Required environment variables
 - Ports used by each component
 - One-time setup actions
