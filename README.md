@@ -62,7 +62,8 @@ monitoring-stack/
 │   ├── app.py
 │   └── requirements.txt
 ├── prometheus/
-│   └── prometheus.yml
+│   ├── prometheus.yml
+|   └── prometheus.service
 ├── docs/
 │   ├── architecture.md
 │   ├── network-flow.md
