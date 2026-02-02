@@ -58,14 +58,17 @@ Ports 8080 and 9100 should only allow inbound traffic from the Prometheus EC2.
 
 monitoring-stack/
 ├── app/
-│ ├── app.py
-│ └── requirements.txt
+│   ├── app.py
+│   └── requirements.txt
+│
 ├── prometheus/
-│ └── prometheus.yml
+│   └── prometheus.yml
+│
 ├── docs/
-│ ├── architecture.md
-│ ├── network-flow.md
-│ └── setup.md
+│   ├── architecture.md
+│   ├── network-flow.md
+│   └── setup.md
+│
 └── README.md
 ---
 
