@@ -1,77 +1,95 @@
-# Project Name
+# Monitoring Stack on AWS EC2 (Metrics Only)
 
-## Overview
-Briefly describe:
-- What problem this project solves
-- What the system demonstrates
-- High-level architecture (logs, metrics, traces flow)
+A production-aligned monitoring stack using **Prometheus** and **Grafana** on AWS EC2,
+with a Python Flask application exposing application metrics and **Node Exporter**
+providing system-level metrics.
 
-## Why This Project Exists
-Explain:
-- The real-world problem or gap this project addresses
-- Why this is not a tutorial clone
-- What practical DevOps/observability understanding it demonstrates
+This project focuses on **VM-based observability** using Linux services and a
+pull-based monitoring model.
 
-## Tech Stack
-- Grafana (visualization)
-- Prometheus (metrics)
-- Loki (logs)
-- Grafana Alloy (telemetry agent)
-- node_exporter (host metrics)
-- Cloud setup 
+---
 
-## Architecture Diagram
-(Insert diagram or image link here)
+## Architecture
 
-## Features
-- Centralized logs
-- Metrics collection and visualization
-- Distributed tracing (if applicable)
-- Basic alerting (if enabled)
+The monitoring stack is deployed across three EC2 instances with clear separation
+of responsibilities:
 
-## Prerequisites
-- Linux / macOS
-- Docker
-- Docker Compose
-- Cloud account (if required)
+### App EC2
+- Python Flask application
+- Exposes Prometheus metrics at `/metrics`
+- Node Exporter for host-level metrics
+- Application managed using `systemd`
 
-## Quick Start
-- Clone the repository
-- Start the monitoring stack
-- Access Grafana UI
+### Prometheus EC2
+- Scrapes application and host metrics
+- Stores time-series data locally
+- Runs as a `systemd` service
 
-## Installation & Initial Setup
-- Step-by-step installation instructions
-    grafana installation
-    Prometheus installation
-    Loki installation
-    Alloy installation
-    node_exporter installation
-    
-- Required environment variables
-- Ports used by each component
-- One-time setup actions
+### Grafana EC2
+- Visualizes metrics from Prometheus
+- Provides dashboards for application and system metrics
+- Runs as a `systemd` service
 
-## Runtime Operations
-- How to start the stack
-- How to stop the stack
-- How to reset / clean up data
+---
 
-## Accessing the UI
-- Grafana: http://localhost:<port>
-- Prometheus: http://localhost:<port>
-- Loki: http://localhost:<port>
+## Metrics Endpoints
 
-## Demo Data / What You’ll See
-- Sample dashboards
-- Example metrics
-- Example logs
+| Component        | Port | Purpose                     |
+|------------------|------|-----------------------------|
+| Flask App        | 8080 | Application metrics         |
+| Node Exporter    | 9100 | Host/system metrics         |
+| Prometheus       | 9090 | Prometheus UI               |
+| Grafana          | 3000 | Grafana UI                  |
 
-## Future Improvements
-- Planned features
-- Architectural enhancements
-- Productization ideas
+---
 
-## Screenshots / GIFs
-(Add screenshots or demo GIFs here)
+## Network Flow
+
+- Prometheus → App EC2 :8080 (application metrics)
+- Prometheus → App EC2 :9100 (node exporter metrics)
+- Browser → Grafana EC2 :3000
+- Browser → Prometheus EC2 :9090 (optional)
+
+Ports 8080 and 9100 should only allow inbound traffic from the Prometheus EC2.
+
+---
+
+## Repository Structure
+
+monitoring-stack/
+├── app/
+│ ├── app.py
+│ └── requirements.txt
+├── prometheus/
+│ └── prometheus.yml
+├── docs/
+│ ├── architecture.md
+│ ├── network-flow.md
+│ └── setup.md
+└── README.md
+---
+
+## Current Status
+
+✔ Flask application running  
+✔ Prometheus scraping metrics  
+✔ Node Exporter providing host metrics  
+✔ Grafana visualizing Prometheus data  
+
+---
+
+## Notes
+
+- Update private IP addresses in `prometheus/prometheus.yml` to match your EC2 instances
+- No containers or orchestration tools are used
+- All services are managed using `systemd`
+- Secrets, credentials, and runtime data are excluded from the repository
+
+---
+
+## Planned Enhancements
+
+- Centralized logging using Loki
+- Log shipping using Grafana Alloy
+- Distributed tracing using OpenTelemetry
 
