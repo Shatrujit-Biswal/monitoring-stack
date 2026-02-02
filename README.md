@@ -56,23 +56,22 @@ Ports 8080 and 9100 should only allow inbound traffic from the Prometheus EC2.
 
 ## Repository Structure
 
+```text
 monitoring-stack/
 ├── app/
 │   ├── app.py
 │   └── requirements.txt
-│
 ├── prometheus/
 │   └── prometheus.yml
-│
 ├── docs/
 │   ├── architecture.md
 │   ├── network-flow.md
 │   └── setup.md
-│
 └── README.md
+```
 ---
 
-## Current Status
+## Implemented Features
 
 ✔ Flask application running  
 ✔ Prometheus scraping metrics  
