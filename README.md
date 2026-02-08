@@ -89,6 +89,14 @@ monitoring-stack/
 - Secrets, credentials, and runtime data are excluded from the repository
 
 ---
+## Dashboards
+
+Grafana dashboards are exported as JSON and version-controlled under `/dashboards`:
+
+- App Health – Flask
+- Host Metrics – App EC2
+- Monitoring Overview
+
 
 ## Planned Enhancements
 
